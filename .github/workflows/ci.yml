@@ -1,0 +1,36 @@
+name: Python CI (pytest)
+
+on:
+  push:
+    branches: ["main", "ai-version-1", "ai-version-2", "ai-version-3"]
+  pull_request:
+    branches: ["main"]
+  workflow_dispatch:
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    env:
+      AI_VERSION: ${{ github.ref_name == 'main' && 'ai-version-3' || github.ref_name }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.9"
+          cache: pip
+
+      - name: Install dependencies
+        run: python -m pip install -r requirements.txt
+
+      - name: Run tests
+        run: python -m pytest --verbose --junitxml=test-results.xml
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pytest-results-${{ github.ref_name }}
+          path: test-results.xml
