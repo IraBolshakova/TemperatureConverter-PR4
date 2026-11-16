@@ -9,7 +9,7 @@ on:
 
 jobs:
   build-and-test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     env:
       AI_VERSION: ${{ github.ref_name == 'main' && 'ai-version-3' || github.ref_name }}
     steps:
