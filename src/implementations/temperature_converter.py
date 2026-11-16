@@ -1,23 +1,25 @@
-"""Реализация GigaChat (AI-v3), используемая в ветках main и ai-version-3."""
+"""Реализация DeepSeek (AI-v2) из практической работы №1."""
 
 from interfaces.temperature_converter import ITemperatureConverter
 
 
 class TemperatureConverter(ITemperatureConverter):
-    """Конвертер температур, реализующий интерфейс ITemperatureConverter."""
+    """Реализация без состояния с __slots__ и константами класса."""
+
+    __slots__ = ()
+
+    _KELVIN_OFFSET: float = 273.15
+    _FAHRENHEIT_MULTIPLIER: float = 9.0 / 5.0
+    _FAHRENHEIT_OFFSET: float = 32.0
 
     def to_fahrenheit(self, celsius: float) -> float:
-        """Перевод из Цельсия в Фаренгейт: (°C × 9/5) + 32."""
-        return celsius * 9.0 / 5.0 + 32.0
+        return celsius * self._FAHRENHEIT_MULTIPLIER + self._FAHRENHEIT_OFFSET
 
     def to_kelvin(self, celsius: float) -> float:
-        """Перевод из Цельсия в Кельвин: °C + 273.15."""
-        return celsius + 273.15
+        return celsius + self._KELVIN_OFFSET
 
     def from_fahrenheit(self, fahrenheit: float) -> float:
-        """Перевод из Фаренгейта в Цельсий: (°F − 32) × 5/9."""
-        return (fahrenheit - 32.0) * 5.0 / 9.0
+        return (fahrenheit - self._FAHRENHEIT_OFFSET) / self._FAHRENHEIT_MULTIPLIER
 
     def from_kelvin(self, kelvin: float) -> float:
-        """Перевод из Кельвина в Цельсий: K − 273.15."""
-        return kelvin - 273.15
+        return kelvin - self._KELVIN_OFFSET
