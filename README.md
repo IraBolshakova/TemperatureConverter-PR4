@@ -21,3 +21,6 @@ py -m pytest -v --junitxml=test-results.xml
 - `ai-version-3` — GigaChat
 
 Ветка `main` содержит базовую структуру и реализацию GigaChat (AI-v3).
+## Автоматическая проверка CI
+
+При отправке изменений в репозиторий GitHub Actions автоматически запускает тесты pytest.
