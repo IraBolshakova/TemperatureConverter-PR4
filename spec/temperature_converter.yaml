@@ -1,1 +1,97 @@
 
+module: TemperatureConverter
+description: Спецификация модуля для преобразования температур между шкалами Цельсия, Фаренгейта и Кельвина.
+
+methods:
+  - name: to_fahrenheit
+    description: Перевод температуры из Цельсия в Фаренгейт.
+    parameter: celsius
+    equivalence_classes:
+      - name: zero_temperature
+        description: Нулевая температура по Цельсию.
+        cases:
+          - input: 0
+            expected: 32.0
+      - name: positive_temperature
+        description: Положительная температура.
+        cases:
+          - input: 100
+            expected: 212.0
+      - name: negative_temperature
+        description: Отрицательная температура.
+        cases:
+          - input: -40
+            expected: -40.0
+      - name: invalid_input
+        description: Некорректный тип входных данных.
+        cases:
+          - input: "100"
+            expected_exception: [TypeError, ValueError]
+          - input: null
+            expected_exception: [TypeError, ValueError]
+
+  - name: to_kelvin
+    description: Перевод температуры из Цельсия в Кельвин.
+    parameter: celsius
+    equivalence_classes:
+      - name: zero_temperature
+        description: Нулевая температура по Цельсию.
+        cases:
+          - input: 0
+            expected: 273.15
+      - name: absolute_zero
+        description: Абсолютный ноль по Цельсию.
+        cases:
+          - input: -273.15
+            expected: 0.0
+      - name: invalid_input
+        description: Некорректный тип входных данных.
+        cases:
+          - input: "100"
+            expected_exception: [TypeError, ValueError]
+          - input: null
+            expected_exception: [TypeError, ValueError]
+
+  - name: from_fahrenheit
+    description: Перевод температуры из Фаренгейта в Цельсий.
+    parameter: fahrenheit
+    equivalence_classes:
+      - name: freezing_point
+        description: Температура замерзания воды.
+        cases:
+          - input: 32
+            expected: 0.0
+      - name: boiling_point
+        description: Температура кипения воды.
+        cases:
+          - input: 212
+            expected: 100.0
+      - name: invalid_input
+        description: Некорректный тип входных данных.
+        cases:
+          - input: "100"
+            expected_exception: [TypeError, ValueError]
+          - input: null
+            expected_exception: [TypeError, ValueError]
+
+  - name: from_kelvin
+    description: Перевод температуры из Кельвина в Цельсий.
+    parameter: kelvin
+    equivalence_classes:
+      - name: freezing_point
+        description: Температура замерзания воды.
+        cases:
+          - input: 273.15
+            expected: 0.0
+      - name: absolute_zero
+        description: Абсолютный ноль по Кельвину.
+        cases:
+          - input: 0
+            expected: -273.15
+      - name: invalid_input
+        description: Некорректный тип входных данных.
+        cases:
+          - input: "100"
+            expected_exception: [TypeError, ValueError]
+          - input: null
+            expected_exception: [TypeError, ValueError]
